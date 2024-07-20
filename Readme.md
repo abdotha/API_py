@@ -1,0 +1,79 @@
+# My Project
+
+This project is designed to learn API .
+
+## Starting steps
+
+- create a virtul envroment by using this command 
+```cmd 
+py -3 -m venv <name>
+```
+me in this project i used 
+```cmd
+py -3 -m venv venv
+ ```
+
+- after createing your api requsts run this command to create a server on the localhost ip *loopback ip*
+    - there is two ways to create this server 
+    1. Fastapi 
+        ```cmd 
+        fastapi dev <path of the .py file>
+        ```
+        me in this project i used:
+        ``` cmd
+        fastapi dev app\main.py
+        ```
+        - hint it will run only in the local device you can not access this in the local network 
+        - To have acces to the server into your local network use this command :
+        ``` cmd
+        fastapi run app\main.py
+        ```
+        - To make the server **Reload** with each update in the code 
+        ``` cmd
+        fastapi run app\main.py --reload
+        ```
+       - __hint__ replace ``` app\main.py ``` with your main file path
+        -------
+    2. Uvcorn
+        ```cmd
+        uvicorn filename:app --reload
+        ```
+        me in this project i used:
+        ```cmd
+        uvicorn app.main:app --reload
+        ```
+        - __hint__ replace ``` app\main.py ``` with your main file path
+## Libraries in this project
+### FastAPI  
+```cmd
+pip install fastapi[all]
+```
+
+### SQL Alchemy
+```cmd
+pip install SQLAlchemy
+```
+### Psycopg 2 
+
+``` cmd
+pip install psycopg2-binary
+```
+
+## Description of some code lines
+
+```python
+app = FastAPI()
+```
+- __app__ : its a instance of the FastAPI class, which is used to create and manage your FastAPI application.
+
+``` python 
+@ app.get("/")
+```
+
+
+## App needed in this project
+1. [Vs Code](https://code.visualstudio.com/download) : As IDE for coding.
+2. [Postman](https://www.postman.com/downloads/) : For doing HTTP Request.
+3. [PostgreSQL](https://www.postgresql.org/download/) : For creating Database.
+
+
