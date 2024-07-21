@@ -32,7 +32,7 @@ py -3 -m venv venv
         ``` cmd
         fastapi run app\main.py --reload
         ```
-       - __hint__ replace ``` app\main.py ``` with your main file path
+       - __hint__ : replace ``` app\main.py ``` with your main file path
         -------
     2. Uvcorn
         ```cmd
@@ -61,14 +61,21 @@ pip install psycopg2-binary
 
 ## Description of some code lines
 
-```python
-app = FastAPI()
-```
-- __app__ : its a instance of the FastAPI class, which is used to create and manage your FastAPI application.
+1.  ```python
+    app = FastAPI()
+    ```
+    - __app__ : its a instance of the FastAPI class, which is used to create and manage your FastAPI application.
+    - __Hint__ : The Root path is ```("/")```
+-------------------
 
-``` python 
-@ app.get("/")
-```
+ 2. ``` python 
+    @ app.get("/")
+    ```
+    -  __Decorator__ : start with ```@```   
+        - app.get(```path```)
+    - Each Api function shoud have a Decorator that till FastAPI that this function sirve that type of HTTP Requests
+        - Ex : ```@ app.get("/")``` -> Tell FastAPI that the next Function will sirve in ```get``` Request 
+----------------------
 
 
 ## App needed in this project
