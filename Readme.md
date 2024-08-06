@@ -64,7 +64,7 @@ pip install psycopg2-binary
 1.  ```python
     app = FastAPI()
     ```
-    - __app__ : its a instance of the FastAPI class, which is used to create and manage your FastAPI application.
+    - __app__ : its a instance of the FastAPI, which is used to create and manage your FastAPI application.
     - __Hint__ : The Root path is ```("/")```
 -------------------
 
@@ -73,7 +73,7 @@ pip install psycopg2-binary
     ```
     -  __Decorator__ : start with ```@```   
         - app.get(```path```)
-    - Each Api function shoud have a Decorator that till FastAPI that this function sirve that type of HTTP Requests
+    - Each Api function shoud have a Decorator that tell FastAPI that this function sirve that type of HTTP Requests
         - Ex : ```@ app.get("/")``` -> Tell FastAPI that the next Function will sirve in ```get``` Request 
 ----------------------
 
