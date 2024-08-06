@@ -5,26 +5,26 @@
 - each SQL command end with `;`
 
 
- ``` sql
-SELECT * FROM products;
-``` 
->  return the columns of the database products
+    ``` sql
+    SELECT * FROM products;
+    ``` 
+    - Return the columns of the database products
 
 - ```*``` => All the columns of the database   
 	-   ```sql
          SELECT name FROM products
          ```
-        > return the columns with title == `name`  
+        - return the columns with title == `name`  
 	- ```SQL 
         SELECT name,id FROM products
         ```
-        > return the columns with title == `name` and `id`
-- `products` => name of your database   
+        -  return the columns with title == `name` and `id`
+- `products` : name of your database   
 
 ---------------------
-```SQL
-SELECT id AS products_id FROM products;	
-```
+ ```SQL    
+  SELECT id AS products_id FROM products;	
+  ```
 - Change the name of the `id` column to`products_id` in database called `products`
 --------------
 ```SQL
@@ -55,7 +55,45 @@ SELECT * FROM products WHERE id = 10 ;
         ```
 	- Ex: To see the items that have `price` equal to __100__ or equal 
     to __200__
-     
+
         ``` SQL
 		SELECT * FROM products WHERE price = 100 or price = 200 ; 
         ```
+-------------------
+```sql 
+SELECT * FROM products WHERE id IN (1,2,3);
+```  
+
+- Used to return data which has id = 1 or id = 2 or id = 3
+---------
+
+```sql
+SELECT * FROM products WHERE name LIKE 'TV%';
+SELECT * FROM products WHERE name NOT LIKE 'TV%';
+```
+- __'TV%'__ : mean to search for any item that its columns `name` start with TV word and any random characters
+- __'%TV'__ : mean to search for any item that its columns `name` (end) with 'TV' word 
+- __'%TV%'__ : search with `'TV'` `name` in the __Middle__ of the word
+- ``NOT LIKE`` : mean to show all the ROW except that have `name` __start__ with 'TV' word and any random characters
+------
+```sql
+SELECT * FROM products ORDER BY price ;
+```
+
+- it will order the output depend on the value of the price 
+    - __Ascending order: default mode__
+- we could use `ASC` for __Ascending__ 
+- we could use  `DESSC` for __Descending__ 
+- we could order the output by more than one column -> 
+    -  ```sql
+        SELECT * FROM products ORDER BY  price , time;
+        ```
+---
+```sql
+SELECT * FROM products LIMIT 5;
+```
+- it limit the number of the output
+- if we want to skip some ROWS we could use OFFSET -> 
+    - ```sql
+      SELECT * FROM products LIMIT 5 OFFSET 3;
+      ```

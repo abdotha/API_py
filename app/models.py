@@ -10,3 +10,8 @@ class Post(Base):
     public = Column(Boolean,nullable=False,server_default='True')
     created_time = Column(TIMESTAMP(timezone=True),nullable=False,server_default=text('now()')) 
     vote = Column(Integer,server_default='0')
+
+class User(Base):
+    __tablename__ = "users"
+    username = Column(String,primary_key=True,nullable=False)
+    password = Column(String,nullable=False)
