@@ -49,7 +49,7 @@ async def create_post(post: schemas.PostCreate,db:Session = Depends(get_db)):
           db.add(newpost)
           db.commit()
           db.refresh(newpost)
-          return newpost
+          return newpost 
 
 @router.delete("/posts/{id}",status_code=status.HTTP_204_NO_CONTENT)
 
