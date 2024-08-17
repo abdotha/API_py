@@ -1,5 +1,6 @@
 from typing import Optional
-from pydantic import BaseModel
+from pydantic import BaseModel,EmailStr
+from datetime import datetime
 
 
 
@@ -17,11 +18,30 @@ class PostBase(BaseModel):
 # class CreatePost(BaseModel):
 #     title: str
 #     contant: str
-#     public: bool =True #its an option pram that user could send it or could send data without it and the deffult will be (true)
+#     public: bool =True 
 #     vote: Optional[int] = None
 
 class PostCreate(PostBase):
     pass 
 
+class Post(PostBase):
+    id: int
+    created_time:datetime
+    class Config:
+        orm_mode = True 
 
+
+class User(BaseModel):
+     email: EmailStr
+     username: str
+     password: str
+
+class UserOut(BaseModel):
+    email: EmailStr
+    username: str
+    created_time:datetime
+    class Config:
+        orm_mode = True
+
+    
          
