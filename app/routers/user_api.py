@@ -1,22 +1,23 @@
 from .. import schemas,models,utils
-from fastapi import FastAPI ,Response,status,HTTPException,Depends,APIRouter
+from fastapi import status,HTTPException,Depends,APIRouter
 from sqlalchemy.orm import Session
 from ..database import get_db
 from typing import List
 
-router= APIRouter(prefix="/users")
+router= APIRouter(prefix="/users",tags=["Users"])
+#tags help in dec of the Api 
 # prefix = "/users"  -> it make the decorator more clean 
 # the decorator was like this 
 #@router.get("/users",response_model=List[schemas.UserOut])
 
 
-@router.get("/",response_model=List[schemas.UserOut])
+@router.get("",response_model=List[schemas.UserOut])
 def show_users(db:Session = Depends(get_db)):
     users = db.query(models.User).all()
     return users
 
 
-@router.post("/",status_code=status.HTTP_201_CREATED,response_model=schemas.UserOut)
+@router.post("",status_code=status.HTTP_201_CREATED,response_model=schemas.UserOut)
 def create_user(user:schemas.User,db:Session = Depends(get_db)):
 # we need to hash the password the the user input for its account
      hashed_password= utils.hash(user.password)

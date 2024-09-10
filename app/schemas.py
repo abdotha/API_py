@@ -10,7 +10,7 @@ from datetime import datetime
 
 class PostBase(BaseModel):
     title: str
-    contant: str
+    content: str
     public: bool =True #its an option pram that user could send it or could send data without it and the deffult will be (true)
     vote: Optional[int] = None
 
@@ -28,7 +28,7 @@ class Post(PostBase):
     id: int
     created_time:datetime
     class Config:
-        orm_mode = True 
+        from_attributes = True 
 
 
 class User(BaseModel):
@@ -41,7 +41,11 @@ class UserOut(BaseModel):
     username: str
     created_time:datetime
     class Config:
-        orm_mode = True
+        from_attributes = True
 
-    
+class UserLogin(BaseModel):
+
+        email:EmailStr
+        password:str
+        
          

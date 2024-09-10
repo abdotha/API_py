@@ -11,12 +11,15 @@ from typing import Optional,List
 import psycopg2
 from psycopg2.extras import RealDictCursor
 
+from app.routers import auth
+
 from .database import engine,get_db
 from . import models,schemas,utils
 
 from sqlalchemy.orm import Session
 
 from .routers import post_api,user_api
+from fastapi.middleware.cors import CORSMiddleware
 
 import time
 
@@ -27,12 +30,21 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins, or specify your domain
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allows all headers
+)
+
 app.include_router(user_api.router)
 app.include_router(post_api.router)
+app.include_router(auth.router)
 
 @ app.get("/") 
 def root():
-    return{"message":"root"}
+    return{"message":"test"}
 
 
 
