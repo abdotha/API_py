@@ -117,11 +117,11 @@ pip install pyjwt
         - `db:Session = Depends(get_db)`: Call the function called `get_db` and store the out in variable called `db` with a datatype of `Session`
         db: Session = Depends(get_db):
 
-        - `Depends(get_db)`: Calls the get_db function from the [database](\database.py) module.
+        - `Depends(get_db)`: Calls the get_db function from the [database](app/database.py) module.
             - __Purpose__: The get_db function is generally used to create and manage a database session (connection) that is passed to your endpoint.
             - `db: Session`: The output of get_db is stored in the variable db and is expected to be of type Session. The Session type typically comes from SQLAlchemy and represents a database connection session.
 
-         - `Depends(oauth2.get_cureent_user)`: Calls the get_cureent_user function from the [oauth2](app\routers\auth.py) module.
+         - `Depends(oauth2.get_cureent_user)`: Calls the get_cureent_user function from the [oauth2](app/routers/auth.py) module.
             - __Purpose__: This function is used to verify the user’s authentication status, usually by checking if the user has a valid token.
             - `username: str`: The result is stored in the `username` variable, which is expected to be of type `str`. This typically represents the username or user data retrieved from the token.
 
