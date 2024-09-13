@@ -19,7 +19,7 @@ def show_users(db:Session = Depends(get_db)):
 
 @router.post("",status_code=status.HTTP_201_CREATED,response_model=schemas.UserOut)
 def create_user(user:schemas.User,db:Session = Depends(get_db)):
-# we need to hash the password the the user input for its account
+# We need to hash the password the the user input for its account
      hashed_password= utils.hash(user.password)
      user.password = hashed_password
      new_user =models.User(** user.dict())

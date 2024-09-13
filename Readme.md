@@ -70,6 +70,10 @@ pip install passlib
 ```cmd 
 pip install bcrypt
 ```
+### Pyjwt
+```cmd 
+pip install pyjwt
+```
 
 ## Description of some code lines
 
@@ -78,7 +82,7 @@ pip install bcrypt
     ```
     - __app__ : its a instance of the FastAPI, which is used to create and manage your FastAPI application.
     - __Hint__ : The Root path is `("/")`
--------------------
+---
 
  2. ``` python 
     @ app.get("/")
@@ -87,11 +91,14 @@ pip install bcrypt
         - app.get(`path`)
     - Each Api function shoud have a Decorator that tell FastAPI that this function sirve that type of HTTP Requests
         - Ex : `@ app.get("/")` -> Tell FastAPI that the next Function will sirve in `get` Request 
-----------------------
+    - If the Decorator was in a router file it should have the name of the router 
+        - Ex : `@router.get("/sql")`
+---
+
 3. ```python 
     router= APIRouter(prefix="/posts",tags=["Posts"])
     ```
-   - `APIRouter()`: used to seprate the APIs into files 
+    - `APIRouter()`: used to seprate the APIs into files 
         - `prefix`: used to make the decorator more clean by pre define the repeated part in the __path__ of the API    
         - `tags`: used to __group the APIs__ into one group with the defined name into the __documentation__
 
@@ -101,7 +108,22 @@ pip install bcrypt
             ```
             - `user_api.router`: The path of the router
             - `app` : the name of FastAPI instance
+---
+    
+4. ```python 
+    def create_post(post: schemas.PostCreate,db:Session = Depends(get_db),username:str = Depends(oauth2.get_cureent_user)):
+    ```
+    - `Depends`: In this code i used to Call a functions that already created in order to get some data like creating a session with DataBase and check if the user has a Valid Token
+        - `db:Session = Depends(get_db)`: Call the function called `get_db` and store the out in variable called `db` with a datatype of `Session`
+        db: Session = Depends(get_db):
 
+        - `Depends(get_db)`: Calls the get_db function from the [database](app\database.py) module.
+            - __Purpose__: The get_db function is generally used to create and manage a database session (connection) that is passed to your endpoint.
+            - `db: Session`: The output of get_db is stored in the variable db and is expected to be of type Session. The Session type typically comes from SQLAlchemy and represents a database connection session.
+
+         - `Depends(oauth2.get_cureent_user)`: Calls the get_cureent_user function from the [oauth2](app\routers\auth.py) module.
+            - __Purpose__: This function is used to verify the user’s authentication status, usually by checking if the user has a valid token.
+            - `username: str`: The result is stored in the `username` variable, which is expected to be of type `str`. This typically represents the username or user data retrieved from the token.
 
 ## App needed in this project
 1. [Vs Code](https://code.visualstudio.com/download) : As IDE for coding.

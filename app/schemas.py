@@ -22,11 +22,14 @@ class PostBase(BaseModel):
 #     vote: Optional[int] = None
 
 class PostCreate(PostBase):
-    pass 
+    # username:str
+    pass
 
 class Post(PostBase):
+    # username:Optional[str] = None
     id: int
     created_time:datetime
+    username: str
     class Config:
         from_attributes = True 
 
@@ -44,8 +47,15 @@ class UserOut(BaseModel):
         from_attributes = True
 
 class UserLogin(BaseModel):
-
-        email:EmailStr
-        password:str
+    email:EmailStr
+    password:str
         
+
+class Token(BaseModel):
+    access_token : str
+    token_type : str
+
+class TokenData(BaseModel):
+    username:Optional[str] = None
+     
          

@@ -1,7 +1,7 @@
-from sqlalchemy import TIMESTAMP, Column, Integer,String,Boolean,text
+from sqlalchemy import TIMESTAMP, Column, ForeignKey, Integer,String,Boolean,text
 from .database import Base
 
-
+# Note with any edit in the model we have to delete the table manually 
 class Post(Base):
     __tablename__ = "posts"
     id = Column(Integer,primary_key=True,nullable=False)
@@ -10,6 +10,7 @@ class Post(Base):
     public = Column(Boolean,nullable=False,server_default='True')
     created_time = Column(TIMESTAMP(timezone=True),nullable=False,server_default=text('now()')) 
     vote = Column(Integer,server_default='0')
+    username =Column(String,ForeignKey("users.username",ondelete="CASCADE"),nullable=False)
 
 class User(Base):
     __tablename__ = "users"
