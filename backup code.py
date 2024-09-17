@@ -61,10 +61,6 @@ def get_post(id: int,response:Response): # id: int make sure that id could be co
           # return{"message":f"Error id:{id} Not found"}
      return{"post details":post}
      
-     
-
-
-#############################################################
 
 #@app.post("/createpost")
 #def create_post(payLoad: dict = Body()): 

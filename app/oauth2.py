@@ -3,22 +3,22 @@ from fastapi.security import OAuth2PasswordBearer
 from datetime import datetime,timedelta
 import jwt
 
-
 from app import schemas
+from .config import settings
 
  
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='login')
-SECRET_KEY = "test"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 10
+SECRET_KEY = settings.SECRET_KEY
+ALGORITHM = settings.ALGORITHM
+ACCESS_TOKEN_EXPIRE_MINUTES = settings.ACCESS_TOKEN_EXPIRE_MINUTES
 
 
 def create_access_token(data:dict):
     to_encode = data.copy()
 # Add the expiration time of the token = [The time of creation + ACCESS_TOKEN_EXPIRE_MINUTES] 
-    expire = datetime.utcnow()+timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    expire = datetime.utcnow()+ timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
 # Add this part to the data[copy] = to_encode
-    to_encode.update({"exp":expire})
+    to_encode.update({"exp": expire})
     
     encoded_jwt = jwt.encode(to_encode,SECRET_KEY,algorithm=ALGORITHM)
 

@@ -44,6 +44,11 @@ py -3 -m venv api_env
         ```
         - __hint__ replace `app\main.py` with your main file path
 ## Libraries in this project
+You could install all the Libraries that required in this project using this command 
+- ```cmd 
+     pip install -r requirements.txt
+    ```
+    - Note: [requirements](requirements.txt) file has all the libraries included in this project and its version
 ### FastAPI:
 To install FastAPI along with all the optional dependencies required for features like databases, web servers, data validation, and asynchronous tasks.
 ```cmd
@@ -73,6 +78,10 @@ pip install bcrypt
 ### Pyjwt
 ```cmd 
 pip install pyjwt
+```
+### Alembic
+```cmd
+pip install alembic 
 ```
 
 ## Description of some code lines
@@ -124,6 +133,11 @@ pip install pyjwt
          - `Depends(oauth2.get_cureent_user)`: Calls the get_cureent_user function from the [oauth2](app/routers/auth.py) module.
             - __Purpose__: This function is used to verify the user’s authentication status, usually by checking if the user has a valid token.
             - `username: str`: The result is stored in the `username` variable, which is expected to be of type `str`. This typically represents the username or user data retrieved from the token.
+
+## Alembic Config 
+[Alembic dict](Alembic_Dict.md)
+
+
 
 ## App needed in this project
 1. [Vs Code](https://code.visualstudio.com/download) : As IDE for coding.

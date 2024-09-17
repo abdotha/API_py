@@ -97,3 +97,11 @@ SELECT * FROM products LIMIT 5;
     - ```sql
       SELECT * FROM products LIMIT 5 OFFSET 3;
       ```
+
+
+# Joining
+
+```sql
+SELECT * FROM posts JOIN users ON posts.id = users.id
+```
+- it will output a new table which  combined the two tables but match the Coloum `id` in the `post` table with `id` in `users` table  

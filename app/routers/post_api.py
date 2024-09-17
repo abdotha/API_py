@@ -1,33 +1,37 @@
+from sqlalchemy import func
 from .. import schemas,models,oauth2
 from fastapi import Response,status,HTTPException,Depends,APIRouter
 from sqlalchemy.orm import Session
 from ..database import get_db
-from typing import List  
+from typing import List, Optional  
 
 
 #router used to seprate the APIs into files
-router= APIRouter(prefix="/posts",tags=["Posts"])
+
 # prefix used to pre define the repeated part in the path 
 # ex all the pathes start with /posts 
 # tags group all the apis in this router into the same group in the documentation 
-@router.get("/sql")
-def test(db: Session = Depends(get_db)):
-     post = db.query(models.Post).all()
-     return post
 
-# decorator == start with @   router.get(path)  root path -> "/"
-@router.get("",response_model=List[schemas.Post])  
-async def get_posts(db:Session = Depends(get_db)):
-    posts = db.query(models.Post).all()
-    return posts 
+router= APIRouter(prefix="/posts",tags=["Posts"])
 
+
+
+
+#     posts = db.query(models.Post).filter(models.Post.title.contains(search))
+
+# decorator == start with @   router.get(path)  root path -> "/"                ,response_model=List[schemas.Post]
+@router.get("",response_model=List[schemas.PostOut])  
+async def get_posts(db:Session = Depends(get_db),search:Optional[str]=''):
+
+    posts = db .query(models.Post,func.count(models.Vote.post_id).label("vote")).join(models.Vote,models.Vote.post_id == models.Post.id,isouter=True).group_by(models.Post.id).filter(models.Post.title.contains(search)).all()
+    return posts
 # @router.get("/{user_username}",response_model=List[schemas.Post],)  
 # async def get_posts(user_username:str,db:Session = Depends(get_db),username:str = Depends(oauth2.get_cureent_user)):
     
 #     posts = db.query(models.Post).filter(models.Post.username == user_username).all()
 #     return posts 
 
-@router.get("/{id}",response_model=schemas.Post)
+@router.get("/{id}",response_model=schemas.PostOut)
 # id: int make sure that id could be converted to int value and if not it will send an error code 
 def get_post(id: int,response:Response,db:Session = Depends(get_db),username:str = Depends(oauth2.get_cureent_user)): 
      
@@ -38,15 +42,12 @@ def get_post(id: int,response:Response,db:Session = Depends(get_db),username:str
      else:
           if post.username != username.username:
                raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
-
+          post = db.query(models.Post,func.count(models.Vote.post_id).label("vote")).join(models.Vote,models.Vote.post_id == models.Post.id,isouter=True).group_by(models.Post.id).filter(models.Post.id == id).first()
           # response.status_code=status.HTTP_404_NOT_FOUND
           # return{"message":f"Error id:{id} Not found"}
      return post
      
      
-
-
-#############################################################
 
 #@router.post("/createpost")
 #def create_post(payLoad: dict = Body()): 
@@ -62,9 +63,7 @@ def get_post(id: int,response:Response,db:Session = Depends(get_db),username:str
 async def create_post(post: schemas.PostCreate,db:Session = Depends(get_db),username:str = Depends(oauth2.get_cureent_user)):
           
           print(username)
-          
-          
-          newpost =models.Post(username=username.username,** post.dict())
+          newpost =models.Post(username=username.username,** post.model_dump())
           db.add(newpost)
           db.commit()
           db.refresh(newpost)
@@ -104,6 +103,6 @@ def update_post(id: int,updated_post:schemas.PostCreate,db:Session = Depends(get
           if post.username != username.username:
                raise HTTPException(status_code=status.HTTP_403_FORBIDDEN) 
           
-          querry.update(updated_post.dict())
+          querry.update(updated_post.model_dump())
           db.commit()
      return{"message":querry.first()}

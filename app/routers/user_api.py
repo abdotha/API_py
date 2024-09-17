@@ -4,11 +4,13 @@ from sqlalchemy.orm import Session
 from ..database import get_db
 from typing import List
 
-router= APIRouter(prefix="/users",tags=["Users"])
-#tags help in dec of the Api 
+# tags help in dec of the Api 
 # prefix = "/users"  -> it make the decorator more clean 
 # the decorator was like this 
-#@router.get("/users",response_model=List[schemas.UserOut])
+# @router.get("/users",response_model=List[schemas.UserOut])
+
+router= APIRouter(prefix="/users",tags=["Users"])
+
 
 
 @router.get("",response_model=List[schemas.UserOut])

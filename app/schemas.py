@@ -12,7 +12,7 @@ class PostBase(BaseModel):
     title: str
     content: str
     public: bool =True #its an option pram that user could send it or could send data without it and the deffult will be (true)
-    vote: Optional[int] = None
+    # vote: Optional[int] = None
 
 
 # class CreatePost(BaseModel):
@@ -26,13 +26,16 @@ class PostCreate(PostBase):
     pass
 
 class Post(PostBase):
-    # username:Optional[str] = None
     id: int
     created_time:datetime
     username: str
     class Config:
         from_attributes = True 
 
+class PostOut(BaseModel):
+     Post:Post
+     vote:int
+    
 
 class User(BaseModel):
      email: EmailStr
@@ -57,5 +60,9 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     username:Optional[str] = None
+
+class Vote(BaseModel):
+    post_id:int
+    vote:bool
      
          
