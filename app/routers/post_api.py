@@ -37,7 +37,7 @@ def get_post(id: int,response:Response,db:Session = Depends(get_db),username:str
      
      post = db.query(models.Post).filter(models.Post.id == id).first()
      if not post:
-          raise HTTPException(status_code = status.HTTP_404_NOT_FOUND,
+          raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, 
                               detail = f"Error id:{id} Not found")
      else:
           if post.username != username.username:
@@ -105,4 +105,4 @@ def update_post(id: int,updated_post:schemas.PostCreate,db:Session = Depends(get
           
           querry.update(updated_post.model_dump())
           db.commit()
-     return{"message":querry.first()}
+     return querry.first()
