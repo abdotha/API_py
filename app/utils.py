@@ -15,5 +15,6 @@ if __name__ == "__main__":
     password = '12345'
     hashed_pass = hash(password= password)
     password ='1234'
-    print(verify(plain_password= password,hashed_password= hashed_pass))
+    print(verify(plain_password= password,hashed_password= hashed_pass)) 
+    
     
